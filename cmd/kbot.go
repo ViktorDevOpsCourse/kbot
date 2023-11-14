@@ -22,6 +22,7 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		b := bot.New(config.TelegramBotToken)
 		b.InitHandlers()
+		b.StartBot()
 	},
 }
 
