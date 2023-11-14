@@ -45,7 +45,7 @@ func (t *TelegramBot) handleStart() {
 		menu := t.bot.NewMarkup()
 		btnJoke := menu.Text(JokeCommand)
 		menu.Reply(menu.Row(btnJoke))
-		return m.Send("Welcome to fanny Kbot!", menu)
+		return m.Send("Welcome to funny Kbot!", menu)
 	})
 }
 
