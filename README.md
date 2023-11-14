@@ -1,7 +1,7 @@
 # Telegram funny bot
 It's a bot which printing you small joke :)
 
-##You can launch it locally and play around with
+## You can launch it locally and play around with
 Few steps to do it
 
 * Register your own telegram bot, contact with [BotFather](https://telegram.me/BotFather)
