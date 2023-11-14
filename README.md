@@ -1,7 +1,7 @@
 # Telegram funny bot
 It's a bot which printing you small joke :)
 
-[Link](t.me/ViktorDevOps_bot) on bot, but it can be off while i not launch it
+[Link](https://t.me/ViktorDevOps_bot) on bot, but it can be off while i not launch it
 
 ## You can launch it locally and play around with
 Few steps to do it
