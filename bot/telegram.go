@@ -44,6 +44,7 @@ func (t *TelegramBot) handleStart() {
 	t.bot.Handle("/start", func(m telebot.Context) error {
 		menu := t.bot.NewMarkup()
 		btnJoke := menu.Text(JokeCommand)
+		menu.ResizeKeyboard = true
 		menu.Reply(menu.Row(btnJoke))
 		return m.Send("Welcome to funny Kbot!", menu)
 	})
