@@ -1,32 +1,26 @@
-APP := $(shell basename $(shell git remote get-url origin))
-APP_NAME := kbot
-REGISTRY := viktordevopscourse
-#VERSION=$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
-VERSION="v1.0.1"
-TARGETOS:=linux #linux darwin windows
-TARGETARCH:=$(shell uname -m) #amd64 arm64
+include ./makefiles/linux.mk
+include ./makefiles/macOS.mk
+include ./makefiles/windows.mk
+
+APP = $(shell basename $(shell git remote get-url origin))
+REGISTRY = us-east1-docker.pkg.dev/viktordevopscourse/k8s-k3s
+VERSION=$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
+TARGETOS = linux#linux darwin windows
+TARGETARCH = arm64#amd64
+TAG = ${REGISTRY}/${APP}:${VERSION}-$(TARGETOS)-${TARGETARCH}
 
 build: format lint
-	CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -v -o kbot -ldflags "-X="github.com/ViktorDevOpsCourse/kbot/config/config.Version=${VERSION}
+	CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} \
+	go build -v -o kbot -ldflags "-X="github.com/ViktorDevOpsCourse/kbot/config/config.Version=${VERSION}
 
-macOS: TARGETOS=darwin
-macOS: build
+image:
+	docker buildx build --build-arg TARGETOS=$(TARGETOS) \
+    	--build-arg TARGETARCH=$(TARGETARCH) \
+    	--build-arg MAKEFILE_RULE=$(MAKEFILE_RULE) \
+    	--tag $(TAG) .
 
-linux: TARGETOS=linux
-linux: build
-
-windows: TARGETOS=windows
-windows: APP_NAME=kbot.exe
-windows: TARGETARCH=$(shell echo %PROCESSOR_ARCHITECTURE%)
-windows: build
-
-docker:
-
-#image:
-#	docker build . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}  --build-arg TARGETARCH=${TARGETARCH}
-
-#push:
-#	docker push ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
+push:
+	docker push $(TAG)
 
 format:
 	gofmt -s -w ./
@@ -41,4 +35,5 @@ test:
 .PHONY: clean
 clean:
 	rm -rf kbot
-	docker rmi ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
+	rm -rf kbot.exe
+	docker rmi -f ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
