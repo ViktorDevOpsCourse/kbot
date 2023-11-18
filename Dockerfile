@@ -1,18 +1,16 @@
-FROM --platform=linux/arm64 golang:1.20 as builder
+FROM golang:1.20 as builder
 
 ARG TARGETOS
 ARG TARGETARCH
-ARG MAKEFILE_RULE
+ARG TARGET
 
-RUN echo "building for $TARGETOS/$TARGETARCH" > /log.
+RUN echo "building for $TARGETOS/$TARGETARCH"
 
 WORKDIR /go/src/app
 COPY ../ .
-RUN make --file=/go/src/app/Makefile TARGETOS=$TARGETOS TARGETARCH=$TARGETARCH $MAKEFILE_RULE
+RUN make --file=/go/src/app/Makefile TARGETOS=$TARGETOS TARGETARCH=$TARGETARCH $TARGET
 
-FROM --platform=$BUILDPLATFORM scratch
-
-ARG BUILDPLATFORM
+FROM scratch
 
 WORKDIR /
 COPY --from=builder /go/src/app/kbot .
