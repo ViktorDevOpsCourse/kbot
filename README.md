@@ -18,3 +18,9 @@ Now you can move to telegram and ask a small joke from bot
 
 * `/start` - start a bot
 * `Tell me joke` or just pres a btn `Tell me joke` - return a perfect joke
+---------
+# Makefile
+
+To know how it works just run 
+
+```make help```

@@ -9,11 +9,11 @@ TARGETOS = linux#linux darwin windows
 TARGETARCH = arm64#amd64
 TAG = ${REGISTRY}/${APP}:${VERSION}-$(TARGETOS)-${TARGETARCH}
 
-build: format lint ## build application with defined OS and ARCH including [format] and [lint]
+build: format lint ## build application with defined OS and ARCH including [format] and [lint]. Optional: TARGETOS, TARGETARCH args
 	CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} \
 	go build -v -o kbot -ldflags "-X="github.com/ViktorDevOpsCourse/kbot/config/config.Version=${VERSION}
 
-image: ## building docker image with tag and defined OS and ARCH
+image: ## building docker image with tag and defined OS and ARCH. Optional: TARGETOS, TARGETARCH args
 	docker build --build-arg TARGETOS=$(TARGETOS) \
 		--build-arg TARGETARCH=$(TARGETARCH) \
 		--build-arg TARGET=$(TARGETOS) \
@@ -34,9 +34,8 @@ test: ## launch tests for code
 
 .PHONY: clean
 clean: ## remove old artifacts
-	rm -rf kbot
-	rm -rf kbot.exe
-	docker rmi -f ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
+	rm -rf kbot*
+	docker rmi -f $(TAG)
 
 .PHONY: help
 help:
