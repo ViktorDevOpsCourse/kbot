@@ -7,7 +7,7 @@ ARG TARGET
 RUN echo "building for $TARGETOS/$TARGETARCH"
 
 WORKDIR /go/src/app
-COPY ../ .
+COPY . .
 RUN make --file=/go/src/app/Makefile TARGETOS=$TARGETOS TARGETARCH=$TARGETARCH $TARGET
 
 FROM scratch
