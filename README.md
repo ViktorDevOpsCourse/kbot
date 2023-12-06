@@ -24,3 +24,6 @@ Now you can move to telegram and ask a small joke from bot
 To know how it works just run 
 
 ```make help```
+
+# Repo GitHub actions
+<div><img src="./assets/img.png"></div>
