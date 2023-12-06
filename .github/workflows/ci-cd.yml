@@ -5,14 +5,14 @@ on:
     branches:
       - 'develop'
 
+permissions:
+  contents: write
+  packages: write
+
 jobs:
   ci:
     name: Kbot CI
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
-      packages: write
 
     steps:
       - name: Checkout
