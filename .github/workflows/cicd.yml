@@ -24,11 +24,13 @@ jobs:
       - name: Build
         run: make image
 
-      - name: Publish service
+      - name: Registry login
         uses: actions/checkout@v4
         permissions:
           packages: write
           contents: read
+
+      - name: Publish service
         run: echo "${{ secrets.GITHUB_TOKEN }}" | 
           docker login ghcr.io -u $ --password-stdin |
           make push
