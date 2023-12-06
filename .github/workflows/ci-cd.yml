@@ -26,6 +26,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Lint
+        run: make lint
+
       - name: Test
         env:
           TELE_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
