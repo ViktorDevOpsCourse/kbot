@@ -31,7 +31,7 @@ lint: ## analyze code to identify potential errors, stylistic inconsistencies, a
 	golangci-lint run -v
 
 test: ## launch tests for code
-	go test -v
+	go test ./... -v
 
 .PHONY: clean
 clean: ## remove old artifacts
