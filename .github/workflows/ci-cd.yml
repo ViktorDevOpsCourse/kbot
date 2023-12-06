@@ -38,7 +38,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish service
-        run: make push
+        run: make push TARGETARCH=amd64
 
   cd:
     name: Kbot CD
