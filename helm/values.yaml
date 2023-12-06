@@ -3,13 +3,11 @@
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
-
 image:
   repository: viktordevopscourse
-  tag: "unknown tag"
+  tag: "v1.0.4-5b569a2-linux-amd64"
   os: linux
   arch: amd64
-
 secret:
   name: TELE_TOKEN
   tokenKey: token
