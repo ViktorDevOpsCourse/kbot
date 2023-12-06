@@ -4,7 +4,8 @@
 
 replicaCount: 1
 image:
-  repository: viktordevopscourse
+  registry: "ghcr.io"
+  repository: viktordevopscourse/kbot
   tag: "v1.0.4-5b569a2-linux-amd64"
   os: linux
   arch: amd64
