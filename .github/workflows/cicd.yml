@@ -10,6 +10,10 @@ jobs:
     name: Kbot CI
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      packages: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -24,11 +28,12 @@ jobs:
       - name: Build
         run: make image
 
-      - name: Registry login
-        uses: actions/checkout@v4
-        permissions:
-          packages: write
-          contents: read
+#      - name: Registry login
+#        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+#          with:
+#            registry: ghcr.io
+#            username: ${{ github.actor }}
+#            password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish service
         run: echo "${{ secrets.GITHUB_TOKEN }}" | 
