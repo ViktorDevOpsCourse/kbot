@@ -3,7 +3,8 @@ include ./mk/macOS.mk
 include ./mk/windows.mk
 
 APP = $(shell basename $(shell git remote get-url origin))
-REGISTRY = us-east1-docker.pkg.dev/viktordevopscourse/k8s-k3s
+#REGISTRY = us-east1-docker.pkg.dev/viktordevopscourse/k8s-k3s
+REGISTRY = ghcr.io/viktordevopscourse
 VERSION=$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
 TARGETOS = linux#linux darwin windows
 TARGETARCH = arm64#amd64
