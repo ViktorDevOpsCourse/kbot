@@ -11,6 +11,10 @@ permissions:
   contents: write
   packages: write
 
+env:
+  OS: linux
+  ARCH: amd64
+
 jobs:
   ci:
     name: Kbot CI
@@ -28,7 +32,7 @@ jobs:
         run: make test
 
       - name: Build
-        run: make image TARGETARCH=amd64
+        run: make image TARGETOS=$OS TARGETARCH=$ARCH
 
       - name: GitHub registry login
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
@@ -53,7 +57,7 @@ jobs:
 
       - uses: mikefarah/yq@master
         with:
-          cmd: yq -i '.image.tag=strenv(VERSION)' helm/values.yaml
+          cmd: yq -i '.image.tag=strenv(VERSION)-$($OS)-${$ARCH}' helm/values.yaml
 
       - run: |
           git config user.name github-actions
