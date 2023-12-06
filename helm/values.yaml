@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: viktordevopscourse
   tag: "v1.0.4-4516915"
-  arch: arm64
+  arch: amd64
 
 secret:
   name: TELE_TOKEN
