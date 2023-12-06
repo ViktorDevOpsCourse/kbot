@@ -28,17 +28,15 @@ jobs:
       - name: Build
         run: make image
 
-#      - name: Registry login
-#        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
-#          with:
-#            registry: ghcr.io
-#            username: ${{ github.actor }}
-#            password: ${{ secrets.GITHUB_TOKEN }}
+      - name: GitHub registry login
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+          with:
+            registry: ghcr.io
+            username: ${{ github.actor }}
+            password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish service
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | 
-          docker login ghcr.io -u $ --password-stdin |
-          make push
+        run: make push
 
   cd:
     name: CD
