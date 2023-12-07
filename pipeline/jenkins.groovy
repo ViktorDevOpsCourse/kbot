@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker { image 'quay.io/projectquay/golang:1.20' }
+        kubernetes
     }
 
     parameters {
