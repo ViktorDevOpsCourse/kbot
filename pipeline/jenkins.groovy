@@ -1,9 +1,5 @@
 pipeline {
-   agent {
-       dockerContainer {
-           image 'quay.io/projectquay/golang:1.20'
-       }
-   }
+   agent any
 
     parameters {
         choice(name: 'OS', choices: ['linux', 'darwin', 'windows', 'all'], description: 'Pick OS')
@@ -17,6 +13,13 @@ pipeline {
     }
 
     stages {
+        stage('Install Make') {
+        steps {
+            script {
+                sh 'apt-get update && apt-get install -y make'
+            }
+        }
+    }
         stage('test') {
             steps {
                 echo "Run unit tests"
