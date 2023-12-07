@@ -16,7 +16,7 @@ pipeline {
         stage('Install Make') {
         steps {
             script {
-                sh 'sudo apt-get update && apt-get install -y make'
+                sh 'apt-get install -y make'
             }
         }
     }
