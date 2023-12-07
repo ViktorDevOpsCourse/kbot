@@ -1,23 +1,5 @@
 pipeline {
-   agent {
-           kubernetes {
-               defaultContainer 'jnlp'
-               yaml """
-               apiVersion: v1
-               kind: Pod
-               metadata:
-                 labels:
-                   app: jenkins-agent
-               spec:
-                 containers:
-                 - name: jnlp
-                   image: quay.io/projectquay/golang:1.20
-                   command:
-                   - cat
-                   tty: true
-                 """
-           }
-       }
+   agent any
 
     parameters {
         choice(name: 'OS', choices: ['linux', 'darwin', 'windows', 'all'], description: 'Pick OS')
