@@ -1,6 +1,21 @@
 pipeline {
     agent {
-        kubernetes
+        kubernetes {
+                   label 'my-kubernetes-agent'
+                   defaultContainer 'jnlp'
+                   yaml """
+                       apiVersion: v1
+                       kind: Pod
+                       metadata:
+                         labels:
+                           jenkins-agent: builder
+                       spec:
+                         containers:
+                         - name:  jenkins-agent-container
+                           image: quay.io/projectquay/golang:1.20
+                           tty: true
+                       """
+               }
     }
 
     parameters {
