@@ -1,7 +1,9 @@
 pipeline {
-    agent {
-        docker { image 'quay.io/projectquay/golang:1.20' }
-    }
+   agent {
+       dockerContainer {
+           image 'quay.io/projectquay/golang:1.20'
+       }
+   }
 
     parameters {
         choice(name: 'OS', choices: ['linux', 'darwin', 'windows', 'all'], description: 'Pick OS')
