@@ -13,13 +13,6 @@ pipeline {
     }
 
     stages {
-        stage('Install Make') {
-        steps {
-            script {
-                sh 'apt-get install -y make'
-            }
-        }
-    }
         stage('test') {
             steps {
                 echo "Run unit tests"
