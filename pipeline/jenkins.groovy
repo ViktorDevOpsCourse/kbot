@@ -1,8 +1,8 @@
 pipeline {
     agent any
     parameters {
-        choice(name: 'OS', defaultValue:'linux', choices: ['linux', 'darwin', 'windows', 'all'], description: 'Pick OS')
-        choice(name: 'ARCH', defaultValue:'amd64',  choices: ['amd64', 'arm64'], description: 'Pick ARCH')
+        choice(name: 'OS', choices: ['linux', 'darwin', 'windows', 'all'], description: 'Pick OS')
+        choice(name: 'ARCH', choices: ['amd64', 'arm64'], description: 'Pick ARCH')
         string(name: 'REGISTRY', defaultValue: 'docker.io/viktordevopscourse', description: 'Enter registry')
     }
 
