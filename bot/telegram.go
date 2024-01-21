@@ -1,6 +1,7 @@
 package bot
 
 import (
+	"context"
 	"fmt"
 	"gopkg.in/telebot.v3"
 	"kbot/config"
@@ -54,6 +55,7 @@ func (t *TelegramBot) handleReplayOnMessage() {
 	t.bot.Handle(telebot.OnText, func(m telebot.Context) error {
 		switch m.Text() {
 		case JokeCommand:
+			defer pmetrics(context.TODO())
 			joke, err := GetJoke()
 			if err != nil {
 				log.Println(err)

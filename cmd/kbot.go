@@ -3,9 +3,17 @@
 package cmd
 
 import (
+	"context"
+	"fmt"
 	"github.com/spf13/cobra"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc"
+	sdkmetric "go.opentelemetry.io/otel/sdk/metric"
+	"go.opentelemetry.io/otel/sdk/resource"
+	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
 	"kbot/bot"
 	"kbot/config"
+	"time"
 )
 
 // kbotCmd represents the kbot command
@@ -26,7 +34,39 @@ to quickly create a Cobra application.`,
 	},
 }
 
+func initMetrics(ctx context.Context) {
+
+	// Create a new OTLP Metric gRPC exporter with the specified endpoint and options
+	exporter, _ := otlpmetricgrpc.New(
+		ctx,
+		otlpmetricgrpc.WithEndpoint(config.MetricsHost),
+		otlpmetricgrpc.WithInsecure(),
+	)
+
+	// Define the resource with attributes that are common to all metrics.
+	// labels/tags/resources that are common to all metrics.
+	resource := resource.NewWithAttributes(
+		semconv.SchemaURL,
+		semconv.ServiceNameKey.String(fmt.Sprintf("kbot_%s", config.Version)),
+	)
+
+	// Create a new MeterProvider with the specified resource and reader
+	mp := sdkmetric.NewMeterProvider(
+		sdkmetric.WithResource(resource),
+		sdkmetric.WithReader(
+			// collects and exports metric data every 10 seconds.
+			sdkmetric.NewPeriodicReader(exporter, sdkmetric.WithInterval(10*time.Second)),
+		),
+	)
+
+	// Set the global MeterProvider to the newly created MeterProvider
+	otel.SetMeterProvider(mp)
+
+}
+
 func init() {
+
+	initMetrics(context.TODO())
 	rootCmd.AddCommand(kbotCmd)
 
 	// Here you will define your flags and configuration settings.
